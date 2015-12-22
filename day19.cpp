@@ -30,6 +30,16 @@ void take_step() {
   swap(current,step);
 }
 
+bool search_replace(int i) {
+  size_t found = input.find(trans[i].second);
+  if (found != string::npos) {
+    input.replace(found, trans[i].second.size(), trans[i].first);
+    cout << "replaced " << trans[i].second << " with " << trans[i].first << endl;
+    return true;
+  }
+  return false;
+}
+
 
 typedef pair<string,string> ss;
 int main() {
@@ -38,7 +48,15 @@ int main() {
 
   while (cin >> left >> right >> right) trans.push_back({left, right});
   sort(trans.begin(), trans.end());
-  reverse(trans.begin(), trans.end());
+  // reverse(trans.begin(), trans.end());
+  int res = 0;
+  while (input != "e") {
+    for (int i = 0; !search_replace(i); i++);
+    res++;
+  }
+  cout << res << endl;
+  return 0;
+  
   int result = 0;
   current.insert("e");
   while (current.find(input) == current.end()) {
